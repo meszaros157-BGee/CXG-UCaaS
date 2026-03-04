@@ -1,66 +1,52 @@
-import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-const pillars = [
-  {
-    title: "Strategic Alignment",
-    description:
-      "Aligning brand experience with business objectives to drive measurable outcomes.",
-  },
-  {
-    title: "Customer Experience",
-    description:
-      "Designing seamless journeys that meet customers where they are and exceed expectations.",
-  },
-  {
-    title: "Operational Excellence",
-    description:
-      "Streamlining processes and technology to deliver consistency at scale.",
-  },
-];
+  hero,
+  overview,
+  trackRecord,
+  about,
+  platform,
+  investment,
+  terms,
+  acceptance,
+  navigation,
+} from "@/content/proposal-data";
+import NavBar from "@/components/sections/nav-bar";
+import HeroSection from "@/components/sections/hero-section";
+import OverviewSection from "@/components/sections/overview-section";
+import TrackRecordSection from "@/components/sections/track-record-section";
+import AboutSection from "@/components/sections/about-section";
+import PlatformSection from "@/components/sections/platform-section";
+import InvestmentSection from "@/components/sections/investment-section";
+import TermsSection from "@/components/sections/terms-section";
+import AcceptanceSection from "@/components/sections/acceptance-section";
+import Footer from "@/components/sections/footer";
 
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Hero */}
-      <section className="flex flex-col items-center justify-center gap-6 px-6 py-24 text-center md:py-32">
-        <h1 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">
-          Engen Integrated Experience
-        </h1>
-        <p className="max-w-xl text-lg text-muted-foreground">
-          A strategic proposal to transform the customer journey through
-          alignment, innovation, and operational excellence.
-        </p>
-      </section>
-
-      {/* Pillar Cards */}
-      <section className="mx-auto grid w-full max-w-5xl gap-6 px-6 pb-16 md:grid-cols-3">
-        {pillars.map((pillar) => (
-          <Card key={pillar.title}>
-            <CardHeader>
-              <CardTitle>{pillar.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CardDescription>{pillar.description}</CardDescription>
-            </CardContent>
-          </Card>
-        ))}
-      </section>
-
-      {/* CTA */}
-      <section className="flex flex-col items-center gap-4 px-6 pb-24 text-center">
-        <h2 className="text-2xl font-semibold">Ready to explore the details?</h2>
-        <p className="max-w-md text-muted-foreground">
-          Dive into the full proposal to see how each pillar comes together.
-        </p>
-        <Button size="lg">View Full Proposal</Button>
-      </section>
+      <NavBar items={navigation} />
+      <main>
+        <HeroSection content={hero} />
+        <div id="overview" className="scroll-mt-14">
+          <OverviewSection content={overview} />
+        </div>
+        <div id="about" className="scroll-mt-14">
+          <AboutSection content={about} />
+        </div>
+        <div id="track-record" className="scroll-mt-14">
+          <TrackRecordSection content={trackRecord} />
+        </div>
+        <div id="platform" className="scroll-mt-14">
+          <PlatformSection content={platform} />
+        </div>
+        <div id="investment" className="scroll-mt-14">
+          <InvestmentSection content={investment} />
+        </div>
+        <div id="terms" className="scroll-mt-14">
+          <TermsSection content={terms} />
+        </div>
+        <AcceptanceSection content={acceptance} />
+      </main>
+      <Footer />
     </div>
   );
 }
