@@ -1,10 +1,9 @@
-import { readFile, writeFile, mkdir } from "fs/promises";
-import path from "path";
+import { put, del, list } from "@vercel/blob";
 
 export interface Proposal {
   id: string;
   name: string;
-  filename: string;
+  blobUrl: string; // Vercel Blob URL for the stored PDF
   password: string;
   uploadedAt: string;
 }
@@ -13,29 +12,38 @@ export interface ProposalsData {
   proposals: Proposal[];
 }
 
-const DATA_DIR = path.join(process.cwd(), "data");
-export const PROPOSALS_DIR = path.join(DATA_DIR, "proposals");
-const PROPOSALS_JSON = path.join(DATA_DIR, "proposals.json");
-
-export async function ensureDirs() {
-  await mkdir(PROPOSALS_DIR, { recursive: true });
-}
+const METADATA_PATH = "cxg-proposals/metadata.json";
 
 export async function getProposals(): Promise<ProposalsData> {
   try {
-    const raw = await readFile(PROPOSALS_JSON, "utf-8");
-    return JSON.parse(raw);
+    const { blobs } = await list({ prefix: METADATA_PATH });
+    if (blobs.length === 0) return { proposals: [] };
+    const res = await fetch(blobs[0].url, { cache: "no-store" });
+    if (!res.ok) return { proposals: [] };
+    return await res.json();
   } catch {
     return { proposals: [] };
   }
 }
 
-export async function saveProposals(data: ProposalsData) {
-  await ensureDirs();
-  await writeFile(PROPOSALS_JSON, JSON.stringify(data, null, 2), "utf-8");
+export async function saveProposals(data: ProposalsData): Promise<void> {
+  await put(METADATA_PATH, JSON.stringify(data, null, 2), {
+    access: "public",
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: "application/json",
+  });
 }
 
-export function isValidAdminPassword(provided: string | null) {
+export async function deletePdf(blobUrl: string): Promise<void> {
+  try {
+    await del(blobUrl);
+  } catch {
+    // Blob may already be deleted — proceed regardless
+  }
+}
+
+export function isValidAdminPassword(provided: string | null): boolean {
   const adminPassword = process.env.ADMIN_PASSWORD ?? "cxgadmin";
   return provided === adminPassword;
 }

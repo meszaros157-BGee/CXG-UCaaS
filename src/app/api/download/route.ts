@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readFile } from "fs/promises";
-import path from "path";
-import { getProposals, PROPOSALS_DIR } from "@/lib/proposals";
+import { getProposals } from "@/lib/proposals";
 
 export async function POST(request: NextRequest) {
   let password: string;
@@ -14,7 +12,10 @@ export async function POST(request: NextRequest) {
   }
 
   if (!password || !/^\d{6}$/.test(password)) {
-    return NextResponse.json({ error: "Password must be exactly 6 digits" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Password must be exactly 6 digits" },
+      { status: 400 }
+    );
   }
 
   const data = await getProposals();
@@ -24,12 +25,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Incorrect password" }, { status: 401 });
   }
 
-  const filePath = path.join(PROPOSALS_DIR, proposal.filename);
-
+  // Fetch PDF from Vercel Blob server-side and stream to client
   try {
-    const fileBuffer = await readFile(filePath);
-    const safeName = proposal.name.replace(/[^a-zA-Z0-9 _-]/g, "").trim() || "CXG-Proposal";
-    return new Response(fileBuffer, {
+    const pdfRes = await fetch(proposal.blobUrl, { cache: "no-store" });
+    if (!pdfRes.ok) {
+      return NextResponse.json({ error: "Proposal file not found" }, { status: 404 });
+    }
+    const buffer = await pdfRes.arrayBuffer();
+    const safeName =
+      proposal.name.replace(/[^a-zA-Z0-9 _-]/g, "").trim() || "CXG-Proposal";
+
+    return new Response(buffer, {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": `attachment; filename="${safeName}.pdf"`,

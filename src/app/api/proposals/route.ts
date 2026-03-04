@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { unlink } from "fs/promises";
-import path from "path";
 import {
   getProposals,
   saveProposals,
-  PROPOSALS_DIR,
+  deletePdf,
   isValidAdminPassword,
 } from "@/lib/proposals";
 
@@ -41,11 +39,8 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: "Proposal not found" }, { status: 404 });
   }
 
-  try {
-    await unlink(path.join(PROPOSALS_DIR, proposal.filename));
-  } catch {
-    // File may already be deleted — proceed regardless
-  }
+  // Delete the PDF from Vercel Blob
+  await deletePdf(proposal.blobUrl);
 
   data.proposals = data.proposals.filter((p) => p.id !== body.id);
   await saveProposals(data);
