@@ -10,12 +10,31 @@ interface AboutSectionProps {
 export default function AboutSection({ content }: AboutSectionProps) {
   return (
     <section className="bg-muted/50 px-6 py-16 md:py-24">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-5xl space-y-12">
         <SectionHeader
           label={content.sectionLabel}
           headline={content.headline}
           description={content.description}
         />
+
+        {/* Four Pillars */}
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          {content.pillars.map((pillar) => (
+            <div
+              key={pillar}
+              className="flex flex-col items-center gap-2 rounded-xl border-t-4 border-t-primary bg-background px-4 py-6 text-center shadow-sm"
+            >
+              <span className="text-sm font-bold tracking-wide text-primary uppercase">
+                {pillar}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* 27-year tagline */}
+        <p className="mx-auto max-w-3xl text-center text-base font-medium text-muted-foreground">
+          {content.tagline}
+        </p>
 
         <div className="grid gap-8 md:grid-cols-2">
           {/* Stats */}

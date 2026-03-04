@@ -1,6 +1,5 @@
 import { Separator } from "@/components/ui/separator";
 import { Mail, Phone, MapPin } from "lucide-react";
-import DownloadButton from "@/components/download-button";
 
 const socialLinks = [
   {
@@ -39,7 +38,6 @@ const quickLinks = [
   { label: "About CXG", href: "#about" },
   { label: "Track Record", href: "#track-record" },
   { label: "Platform", href: "#platform" },
-  { label: "Investment", href: "#investment" },
   { label: "Terms", href: "#terms" },
 ];
 
@@ -135,27 +133,20 @@ export default function Footer() {
         <Separator className="my-8 bg-background/10" />
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center gap-4 text-center text-xs text-background/40 md:flex-row md:justify-between md:text-left">
+        <div className="flex flex-col items-center gap-3 text-center text-xs text-background/40 md:flex-row md:justify-between md:text-left">
           <p>
             &copy; {new Date().getFullYear()} CXG Integrated CX. All rights
             reserved.
           </p>
-          <DownloadButton
-            variant="outline"
-            size="sm"
-            className="border-background/20 text-background/60 hover:border-primary hover:bg-primary hover:text-background"
-          />
-          <div className="flex items-center gap-4">
-            <p>25 February 2026 &middot; Confidential</p>
-            <a
-              href="https://www.cxg.co.za"
-              className="text-background/40 transition-colors hover:text-primary"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              www.cxg.co.za
-            </a>
-          </div>
+          <p>25 February 2026 &middot; Confidential</p>
+          <a
+            href="https://www.cxg.co.za"
+            className="text-background/40 transition-colors hover:text-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            www.cxg.co.za
+          </a>
         </div>
       </div>
     </footer>

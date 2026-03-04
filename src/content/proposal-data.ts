@@ -40,7 +40,6 @@ export const navigation: NavItem[] = [
   { label: "About CXG", href: "#about" },
   { label: "Track Record", href: "#track-record" },
   { label: "Platform", href: "#platform" },
-  { label: "Investment", href: "#investment" },
   { label: "Terms", href: "#terms" },
 ];
 
@@ -50,7 +49,7 @@ export const hero: HeroContent = {
   subheadline: "Integrated Experiences",
   description:
     "A fully managed, omni-channel customer engagement platform that enables you to deliver consistent, measurable customer experiences across Voice, WhatsApp, SMS, Email, Chat and Social all supported by a unified and single desktop and view of your Customer underpinned with CRM-enabled workflows.",
-  primaryCta: { label: "View Investment", href: "#investment" },
+  primaryCta: { label: "About CXG", href: "#about" },
   secondaryCta: { label: "Explore Platform", href: "#platform" },
 };
 
@@ -122,6 +121,14 @@ export const about: AboutContent = {
   headline: "About CXG",
   description:
     "CXG remains a leading South African on-demand integrated customer experience provider serving 100+ premier and corporate brands, with delivery experience extending into the United Kingdom, North America, Australia, and New Zealand.",
+  tagline:
+    "With a track record spanning 27 years, we remain the leading On-Demand Integrated Customer Experience provider. We are accredited, certified and a trusted local and global premier digital partner.",
+  pillars: [
+    "Customer Obsessed",
+    "Experience Driven",
+    "Growth Enabling",
+    "Value Creating",
+  ],
   highlights: [
     "Implementation of complex CX strategies underpinned by robust, scalable technology",
     "Identification and reporting on bespoke critical success factors and KPIs",

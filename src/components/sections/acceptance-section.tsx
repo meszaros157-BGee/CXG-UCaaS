@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import DownloadButton from "@/components/download-button";
 import type { AcceptanceContent } from "@/content/types";
 
 interface AcceptanceSectionProps {
@@ -13,9 +13,11 @@ export default function AcceptanceSection({ content }: AcceptanceSectionProps) {
           {content.headline}
         </h2>
         <p className="text-primary-foreground/80">{content.description}</p>
-        <Button size="lg" variant="secondary">
-          {content.ctaLabel}
-        </Button>
+        <DownloadButton
+          variant="secondary"
+          size="lg"
+          className="bg-white text-primary hover:bg-white/85 border-transparent"
+        />
       </div>
     </section>
   );

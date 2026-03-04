@@ -45,6 +45,8 @@ export interface AboutContent {
   sectionLabel: string;
   headline: string;
   description: string;
+  tagline: string;
+  pillars: string[];
   highlights: string[];
   stats: Stat[];
 }

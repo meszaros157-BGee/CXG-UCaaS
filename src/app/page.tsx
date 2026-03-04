@@ -4,7 +4,6 @@ import {
   trackRecord,
   about,
   platform,
-  investment,
   terms,
   acceptance,
   navigation,
@@ -15,7 +14,6 @@ import OverviewSection from "@/components/sections/overview-section";
 import TrackRecordSection from "@/components/sections/track-record-section";
 import AboutSection from "@/components/sections/about-section";
 import PlatformSection from "@/components/sections/platform-section";
-import InvestmentSection from "@/components/sections/investment-section";
 import TermsSection from "@/components/sections/terms-section";
 import AcceptanceSection from "@/components/sections/acceptance-section";
 import Footer from "@/components/sections/footer";
@@ -37,9 +35,6 @@ export default function Home() {
         </div>
         <div id="platform" className="scroll-mt-14">
           <PlatformSection content={platform} />
-        </div>
-        <div id="investment" className="scroll-mt-14">
-          <InvestmentSection content={investment} />
         </div>
         <div id="terms" className="scroll-mt-14">
           <TermsSection content={terms} />
