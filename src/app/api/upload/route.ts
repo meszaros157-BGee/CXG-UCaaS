@@ -58,11 +58,20 @@ export async function POST(request: NextRequest) {
   const id = randomBytes(8).toString("hex");
 
   // Upload PDF directly to Vercel Blob
-  const blob = await put(`cxg-proposals/pdfs/${id}.pdf`, file, {
-    access: "public",
-    contentType: "application/pdf",
-    addRandomSuffix: false,
-  });
+  let blob: Awaited<ReturnType<typeof put>>;
+  try {
+    blob = await put(`cxg-proposals/pdfs/${id}.pdf`, file, {
+      access: "public",
+      contentType: "application/pdf",
+      addRandomSuffix: false,
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json(
+      { error: `Blob upload failed: ${message}` },
+      { status: 500 }
+    );
+  }
 
   existing.proposals.push({
     id,
@@ -72,7 +81,15 @@ export async function POST(request: NextRequest) {
     uploadedAt: new Date().toISOString(),
   });
 
-  await saveProposals(existing);
+  try {
+    await saveProposals(existing);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json(
+      { error: `Metadata save failed: ${message}` },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json({ success: true, id });
 }

@@ -83,16 +83,20 @@ export default function AdminPage() {
 
     try {
       const res = await fetch("/api/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      if (!res.ok) { setUploadError(data.error ?? "Upload failed."); return; }
+      let data: { error?: string; success?: boolean } = {};
+      try { data = await res.json(); } catch { /* non-JSON response */ }
+      if (!res.ok) {
+        setUploadError(data.error ?? `Upload failed (HTTP ${res.status}).`);
+        return;
+      }
       setUploadSuccess(`"${proposalName.trim()}" uploaded successfully.`);
       setFile(null);
       setProposalName("");
       setDownloadPassword("");
       if (fileInputRef.current) fileInputRef.current.value = "";
       fetchProposals(adminPassword);
-    } catch {
-      setUploadError("Something went wrong. Please try again.");
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
       setUploading(false);
     }
