@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { put } from "@vercel/blob";
 import { randomBytes } from "crypto";
 import {
   getProposals,
@@ -7,34 +6,31 @@ import {
   isValidAdminPassword,
 } from "@/lib/proposals";
 
+// POST /api/upload  body: { adminPassword, blobUrl, name, password }
+// Called by the admin client AFTER the file has been uploaded directly to Vercel Blob.
 export async function POST(request: NextRequest) {
-  let formData: FormData;
+  let body: {
+    adminPassword?: string;
+    blobUrl?: string;
+    name?: string;
+    password?: string;
+  };
 
   try {
-    formData = await request.formData();
+    body = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const adminPassword = formData.get("adminPassword") as string;
-  const file = formData.get("file") as File | null;
-  const name = (formData.get("name") as string)?.trim();
-  const password = formData.get("password") as string;
+  const { adminPassword, blobUrl, name, password } = body;
 
-  if (!isValidAdminPassword(adminPassword)) {
+  if (!isValidAdminPassword(adminPassword ?? null)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  if (!file || !name || !password) {
+  if (!blobUrl || !name?.trim() || !password) {
     return NextResponse.json(
-      { error: "Missing required fields: file, name, password" },
-      { status: 400 }
-    );
-  }
-
-  if (file.type !== "application/pdf") {
-    return NextResponse.json(
-      { error: "Only PDF files are accepted" },
+      { error: "Missing required fields: blobUrl, name, password" },
       { status: 400 }
     );
   }
@@ -46,7 +42,6 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Check password is not already in use
   const existing = await getProposals();
   if (existing.proposals.some((p) => p.password === password)) {
     return NextResponse.json(
@@ -57,26 +52,10 @@ export async function POST(request: NextRequest) {
 
   const id = randomBytes(8).toString("hex");
 
-  // Upload PDF directly to Vercel Blob
-  let blob: Awaited<ReturnType<typeof put>>;
-  try {
-    blob = await put(`cxg-proposals/pdfs/${id}.pdf`, file, {
-      access: "public",
-      contentType: "application/pdf",
-      addRandomSuffix: false,
-    });
-  } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    return NextResponse.json(
-      { error: `Blob upload failed: ${message}` },
-      { status: 500 }
-    );
-  }
-
   existing.proposals.push({
     id,
-    name,
-    blobUrl: blob.url,
+    name: name.trim(),
+    blobUrl,
     password,
     uploadedAt: new Date().toISOString(),
   });

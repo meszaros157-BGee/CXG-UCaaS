@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { upload } from "@vercel/blob/client";
 import { Upload, Trash2, Eye, EyeOff, Lock, FileText, LogOut, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -75,20 +76,35 @@ export default function AdminPage() {
     if (!/^\d{6}$/.test(downloadPassword)) { setUploadError("Download password must be exactly 6 digits."); return; }
 
     setUploading(true);
-    const formData = new FormData();
-    formData.append("adminPassword", adminPassword);
-    formData.append("file", file);
-    formData.append("name", proposalName.trim());
-    formData.append("password", downloadPassword);
 
     try {
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      // Step 1: Upload file directly to Vercel Blob (bypasses the 4.5 MB serverless limit)
+      const blob = await upload(file.name, file, {
+        access: "public",
+        handleUploadUrl: "/api/blob-token",
+        clientPayload: JSON.stringify({ adminPassword }),
+      });
+
+      // Step 2: Save metadata via a lightweight JSON call
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          adminPassword,
+          blobUrl: blob.url,
+          name: proposalName.trim(),
+          password: downloadPassword,
+        }),
+      });
+
       let data: { error?: string; success?: boolean } = {};
       try { data = await res.json(); } catch { /* non-JSON response */ }
+
       if (!res.ok) {
-        setUploadError(data.error ?? `Upload failed (HTTP ${res.status}).`);
+        setUploadError(data.error ?? `Save failed (HTTP ${res.status}).`);
         return;
       }
+
       setUploadSuccess(`"${proposalName.trim()}" uploaded successfully.`);
       setFile(null);
       setProposalName("");
@@ -96,7 +112,7 @@ export default function AdminPage() {
       if (fileInputRef.current) fileInputRef.current.value = "";
       fetchProposals(adminPassword);
     } catch (err) {
-      setUploadError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      setUploadError(err instanceof Error ? err.message : "Upload failed. Please try again.");
     } finally {
       setUploading(false);
     }
