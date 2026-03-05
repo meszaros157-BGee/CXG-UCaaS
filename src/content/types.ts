@@ -13,6 +13,7 @@ export interface OverviewPoint {
   icon: LucideIcon;
   title: string;
   description: string;
+  href?: string;
 }
 
 export interface OverviewContent {
