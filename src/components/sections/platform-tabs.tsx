@@ -12,7 +12,7 @@ export default function PlatformTabs({ labels, panels }: PlatformTabsProps) {
   const [active, setActive] = useState(0);
 
   return (
-    <div className="grid gap-6 md:grid-cols-[240px_1fr]">
+    <div className="grid gap-6 md:grid-cols-[220px_1fr]">
       {/* Channel selector sidebar */}
       <div className="flex flex-row gap-1.5 overflow-x-auto md:flex-col md:overflow-x-visible">
         {labels.map((label, index) => {
@@ -21,10 +21,10 @@ export default function PlatformTabs({ labels, panels }: PlatformTabsProps) {
             <button
               key={label}
               onClick={() => setActive(index)}
-              className={`flex shrink-0 items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors ${
+              className={`flex shrink-0 items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition-colors ${
                 isActive
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
+                  ? "bg-[#2467e3] text-white"
+                  : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
               }`}
             >
               {label}

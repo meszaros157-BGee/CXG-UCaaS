@@ -20,7 +20,7 @@ export default function NavBar({ items }: NavBarProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
         <a href="#" className="flex items-center">
           <img
@@ -33,18 +33,32 @@ export default function NavBar({ items }: NavBarProps) {
         {/* Desktop */}
         <div className="hidden items-center gap-1 md:flex">
           {items.map((item) => (
-            <Button key={item.href} variant="ghost" size="sm" asChild>
+            <Button
+              key={item.href}
+              variant="ghost"
+              size="sm"
+              className="text-foreground/70 hover:text-foreground"
+              asChild
+            >
               <a href={item.href}>{item.label}</a>
             </Button>
           ))}
-          <div className="ml-2 border-l pl-3">
-            <DownloadButton variant="default" size="sm" />
+          <div className="ml-2 border-l border-neutral-200 pl-3">
+            <DownloadButton
+              variant="default"
+              size="sm"
+              className="rounded-full bg-[#2467e3] hover:bg-[#1c54c8]"
+            />
           </div>
         </div>
 
         {/* Mobile */}
         <div className="flex items-center gap-2 md:hidden">
-          <DownloadButton variant="outline" size="sm" />
+          <DownloadButton
+            variant="default"
+            size="sm"
+            className="rounded-full bg-[#2467e3] hover:bg-[#1c54c8]"
+          />
           <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
