@@ -97,6 +97,27 @@ export default function PlatformSection({ content }: PlatformSectionProps) {
               Six AI capabilities included as standard&mdash;no additional cost. Every conversation is analysed, scored, and optimised in real time.
             </p>
           </div>
+
+          {/* AI orb visual */}
+          <div className="relative mb-10 flex justify-center">
+            <img
+              src="/ai-orb.webp"
+              alt="AI intelligence visualization"
+              className="w-full max-w-lg"
+              style={{
+                maskImage:
+                  "radial-gradient(ellipse 42% 48% at 50% 50%, black 0%, transparent 100%)",
+                WebkitMaskImage:
+                  "radial-gradient(ellipse 42% 48% at 50% 50%, black 0%, transparent 100%)",
+              }}
+            />
+            {/* Blue glow beneath the orb */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 h-20 w-[40%] rounded-full bg-[#2467e3]/25 blur-[50px]"
+            />
+          </div>
+
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {content.aiCapabilities.map((capability) => {
               const Icon = capability.icon;
