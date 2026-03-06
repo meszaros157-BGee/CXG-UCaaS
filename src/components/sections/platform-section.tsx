@@ -100,7 +100,7 @@ export default function PlatformSection({ content }: PlatformSectionProps) {
               <span className="size-[7px] bg-[#2467e3]" />
               <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2467e3]">Omni-Channel</span>
             </div>
-            <h3 className="font-heading text-2xl font-bold text-white">Every Channel, One Interface</h3>
+            <h3 className="font-heading text-2xl font-bold" style={{ background: "linear-gradient(135deg, #cc2229 0%, #7c3aed 50%, #1e6bd6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Every Channel, One Interface</h3>
             <p className="max-w-xl text-sm text-white/60">
               However your customers want to get in touch, QContact connects over 10 different channels into one unified platform with a single customer timeline.
             </p>
@@ -117,7 +117,7 @@ export default function PlatformSection({ content }: PlatformSectionProps) {
               <span className="size-[7px] bg-[#2467e3]" />
               <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2467e3]">AI &amp; Automation</span>
             </div>
-            <h3 className="font-heading text-2xl font-bold text-white">Intelligence Built Into Every Interaction</h3>
+            <h3 className="font-heading text-2xl font-bold" style={{ background: "linear-gradient(135deg, #cc2229 0%, #7c3aed 50%, #1e6bd6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Intelligence Built Into Every Interaction</h3>
             <p className="max-w-xl text-sm text-white/60">
               Six AI capabilities included as standard&mdash;no additional cost. Every conversation is analysed, scored, and optimised in real time.
             </p>
@@ -176,7 +176,7 @@ export default function PlatformSection({ content }: PlatformSectionProps) {
               <span className="size-[7px] bg-[#2467e3]" />
               <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2467e3]">Core Features</span>
             </div>
-            <h3 className="font-heading text-2xl font-bold text-white">CRM, Workflows, IVR &amp; Reporting</h3>
+            <h3 className="font-heading text-2xl font-bold" style={{ background: "linear-gradient(135deg, #cc2229 0%, #7c3aed 50%, #1e6bd6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>CRM, Workflows, IVR &amp; Reporting</h3>
             <p className="max-w-xl text-sm text-white/60">
               A 360-degree view of every customer journey with built-in CRM, workflow automation, self-service tools, and real-time analytics.
             </p>
