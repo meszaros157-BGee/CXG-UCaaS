@@ -47,8 +47,33 @@ export default function PlatformSection({ content }: PlatformSectionProps) {
   });
 
   return (
-    <section className="bg-[#161616] px-6 py-16 md:py-24">
-      <div className="mx-auto max-w-5xl">
+    <section className="relative overflow-hidden bg-[#05070f] px-6 py-16 md:py-24">
+
+      {/* ── Aurora colour blobs — top zone ── */}
+
+      {/* Red — top-left */}
+      <div aria-hidden className="pointer-events-none absolute rounded-full" style={{ top: "-100px", left: "-100px", width: "660px", height: "500px", background: "radial-gradient(ellipse, #cc2229 0%, transparent 70%)", opacity: 0.32, filter: "blur(55px)", animation: "hero-blob-1 14s ease-in-out infinite" }} />
+
+      {/* Purple — top-right */}
+      <div aria-hidden className="pointer-events-none absolute rounded-full" style={{ top: "-60px", right: "-80px", width: "720px", height: "560px", background: "radial-gradient(ellipse, #7c3aed 0%, transparent 70%)", opacity: 0.27, filter: "blur(65px)", animation: "hero-blob-2 19s ease-in-out infinite", animationDelay: "2s" }} />
+
+      {/* ── Mid zone ── */}
+
+      {/* Dark blue — centre-left */}
+      <div aria-hidden className="pointer-events-none absolute rounded-full" style={{ top: "35%", left: "-120px", width: "580px", height: "400px", background: "radial-gradient(ellipse, #1e3a8a 0%, transparent 70%)", opacity: 0.45, filter: "blur(70px)", animation: "hero-blob-3 22s ease-in-out infinite", animationDelay: "1s" }} />
+
+      {/* Grey — centre-right */}
+      <div aria-hidden className="pointer-events-none absolute rounded-full" style={{ top: "42%", right: "5%", width: "460px", height: "340px", background: "radial-gradient(ellipse, #6b7280 0%, transparent 70%)", opacity: 0.14, filter: "blur(80px)", animation: "hero-blob-4 16s ease-in-out infinite", animationDelay: "3.5s" }} />
+
+      {/* ── Bottom zone ── */}
+
+      {/* Purple — bottom-left */}
+      <div aria-hidden className="pointer-events-none absolute rounded-full" style={{ bottom: "5%", left: "-60px", width: "600px", height: "420px", background: "radial-gradient(ellipse, #7c3aed 0%, transparent 70%)", opacity: 0.22, filter: "blur(60px)", animation: "hero-blob-2 18s ease-in-out infinite", animationDelay: "5s" }} />
+
+      {/* Dark blue — bottom-right */}
+      <div aria-hidden className="pointer-events-none absolute rounded-full" style={{ bottom: "0", right: "-80px", width: "680px", height: "380px", background: "radial-gradient(ellipse, #1e3a8a 0%, transparent 70%)", opacity: 0.40, filter: "blur(65px)", animation: "hero-blob-1 20s ease-in-out infinite", animationDelay: "6s" }} />
+
+      <div className="relative z-10 mx-auto max-w-5xl">
         <SectionHeader
           label={content.sectionLabel}
           headline={content.headline}

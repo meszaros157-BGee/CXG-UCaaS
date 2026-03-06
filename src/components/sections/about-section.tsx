@@ -8,8 +8,23 @@ interface AboutSectionProps {
 
 export default function AboutSection({ content }: AboutSectionProps) {
   return (
-    <section className="bg-[#161616] px-6 py-16 md:py-24">
-      <div className="mx-auto max-w-5xl space-y-12">
+    <section className="relative overflow-hidden bg-[#05070f] px-6 py-16 md:py-24">
+
+      {/* ── Aurora colour blobs ── */}
+
+      {/* Purple — top-left, pulled in-bounds */}
+      <div aria-hidden className="pointer-events-none absolute rounded-full" style={{ top: "-40px", left: "-40px", width: "620px", height: "480px", background: "radial-gradient(ellipse, #7c3aed 0%, transparent 70%)", opacity: 0.38, filter: "blur(50px)", animation: "hero-blob-2 17s ease-in-out infinite" }} />
+
+      {/* Red — top-right, pulled in-bounds */}
+      <div aria-hidden className="pointer-events-none absolute rounded-full" style={{ top: "-40px", right: "-40px", width: "600px", height: "440px", background: "radial-gradient(ellipse, #cc2229 0%, transparent 70%)", opacity: 0.38, filter: "blur(50px)", animation: "hero-blob-1 13s ease-in-out infinite", animationDelay: "3s" }} />
+
+      {/* Dark blue — bottom-center */}
+      <div aria-hidden className="pointer-events-none absolute rounded-full" style={{ bottom: "-40px", left: "calc(50% - 380px)", width: "760px", height: "320px", background: "radial-gradient(ellipse, #1e3a8a 0%, transparent 70%)", opacity: 0.55, filter: "blur(65px)", animation: "hero-blob-3 19s ease-in-out infinite", animationDelay: "1.5s" }} />
+
+      {/* Grey — mid, adds depth */}
+      <div aria-hidden className="pointer-events-none absolute rounded-full" style={{ top: "35%", right: "15%", width: "420px", height: "300px", background: "radial-gradient(ellipse, #6b7280 0%, transparent 70%)", opacity: 0.18, filter: "blur(75px)", animation: "hero-blob-4 15s ease-in-out infinite", animationDelay: "4s" }} />
+
+      <div className="relative z-10 mx-auto max-w-5xl space-y-12">
         <SectionHeader
           label={content.sectionLabel}
           headline={content.headline}
